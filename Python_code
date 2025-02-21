@@ -27,3 +27,30 @@ for i in range(20):
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#Python code for Question2
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 100  # Number of resistor branches
+sets_num = 20  # Number of sets of V and G considered for the plot
+
+Vin = np.random.uniform(0, 1, (N, sets_num))  # Generating random Vin values from (0V - 1V)
+G1 = np.random.uniform(10e-6, 100e-6, (N, 1))  # Generating random G values from (10μS - 100μS)
+G2= 0.1                                         # G wire
+# Iout_a and I_ideal
+Iout_b = np.sum(Vin * ((G1*G2)/(G1+G2)), axis=0)  # Sum of N branches
+I_ideal = np.sum(Vin * G1, axis=0)  # Equal to Iout_a in this case
+
+# plot of Iout vs. I_ideal
+plt.scatter(Iout_b, I_ideal, color='r', label="Iout_b vs. I_ideal")
+plt.xlabel("Iout_b")
+plt.ylabel("I_ideal")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Printing the results
+for i in range(20):
+    print(f"Set number {i+1}: Iout_b = {Iout_b[i]:.5f} Ampere, I_ideal = {I_ideal[i]:.5f} Ampere")
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
