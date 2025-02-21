@@ -1,0 +1,29 @@
+#Python Code for first Question
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 100  # Number of resistor branches
+sets_num = 20  # Number of sets of V and G considered for the plot
+
+Vin = np.random.uniform(0, 1, (N, sets_num))  # Generating random Vin values from (0V - 1V)
+G1 = np.random.uniform(10e-6, 100e-6, (N, 1))  # Generating random G values from (10μS - 100μS)
+
+# Iout_a and I_ideal
+Iout_a = np.sum(Vin * (G1), axis=0)  # Sum of N branches
+I_ideal = np.sum(Vin * G1, axis=0)  # Equal to Iout_a in this case
+
+# plot of Iout vs. I_ideal
+plt.scatter(Iout_a, I_ideal, color='r', label="Iout vs. I_ideal")
+plt.xlabel("Iout_a")
+plt.ylabel("I_ideal")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Printing the results
+for i in range(20):
+    print(f"Set number {i+1}: Iout_a = {Iout_a[i]:.5f} Ampere, I_ideal = {I_ideal[i]:.5f} Ampere")
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
