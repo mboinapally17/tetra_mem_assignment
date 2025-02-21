@@ -54,3 +54,60 @@ plt.show()
 for i in range(20):
     print(f"Set number {i+1}: Iout_b = {Iout_b[i]:.5f} Ampere, I_ideal = {I_ideal[i]:.5f} Ampere")
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+#Python code for Question3
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+N = 100  # Number of resistor branches
+sets_num = 20  # Number of sets of V and G considered for the plot
+Gwire = 0.1  # Wire conductance
+V_offset = 0.05  # Voltage offset of the first column's ground
+
+
+Iout_c_values = []
+I_ideal_values = []
+
+# Generate multiple sets of Vin and G values
+for i in range(sets_num):
+    Vin = np.random.uniform(0, 1, (N, 2))  
+    G = np.random.uniform(10e-6, 100e-6, (N, 2)) 
+
+    
+    G1 = G[:, 0].reshape(N, 1)  # First conductance column
+    G2 = G[:, 1].reshape(N, 1)  # Second conductance column
+    Vin1 = Vin[:, 0].reshape(N, 1)  # First voltages column
+    Vin2 = Vin[:, 1].reshape(N, 1)  # Second voltages column
+
+    # Effective Conductance of the Second Column
+    G_eff = G2 + (Gwire * G1) / (Gwire + G1)
+
+    # Effective Voltage of the Second Column
+    V_eff = Vin2 - (V_offset * Gwire / G_eff)
+
+    # I_ideal
+    I_ideal = np.sum(Vin2 * G2)
+
+    # Iout_c 
+    Iout_c = np.sum(V_eff * G_eff)
+
+    I_ideal_values.append(I_ideal)
+    Iout_c_values.append(Iout_c)
+
+# Scatter plot of Iout_c vs. I_ideal
+plt.figure(figsize=(8, 6))
+plt.scatter(I_ideal_values, Iout_c_values, color='r', alpha=0.8)
+plt.xlabel(r"$I_{ideal}$ (Ampere)")
+plt.ylabel(r"$I_{out_c}$ (Ampere)")
+plt.title(r"Scatter Plot of $I_{out_c}$ vs. $I_{ideal}$ with Inter-Column Conductance")
+plt.grid(True)
+
+plt.show()
+
+
+for i in range(20):
+    print(f"Set {i+1}: Iout_c = {Iout_c_values[i]:.5f} Ampere, I_ideal = {I_ideal_values[i]:.5f} Ampere")
