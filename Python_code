@@ -111,3 +111,12 @@ plt.show()
 
 for i in range(20):
     print(f"Set {i+1}: Iout_c = {Iout_c_values[i]:.5f} Ampere, I_ideal = {I_ideal_values[i]:.5f} Ampere")
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Answers for Question4
+
+4.1) Cell type A and Cell type B, both are same as they contain one resistor and one transistor in the whole. The current drop is same if the current first passes through transistor or a resistor.
+     So both the configurations are not best suitable to reduce the difference between Iideal and Iout_d.
+4.2) Resistor is a linear device and transistor is a non-linear device. Computations involving non-linear devices are hard.
